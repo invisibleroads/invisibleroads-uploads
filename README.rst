@@ -1,4 +1,4 @@
-invisibleroads-uploads
+InvisibleRoads Uploads
 ======================
 Add basic file upload functionality to your Pyramid app.
 
