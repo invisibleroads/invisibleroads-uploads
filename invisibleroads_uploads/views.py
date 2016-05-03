@@ -65,7 +65,7 @@ def make_upload_folder(data_folder, user_id):
 def get_upload(data_folder, user_id, upload_id):
     parent_folder = join(data_folder, 'uploads')
     source_folder = resolve_relative_path(
-        join(str(user_id), upload_id), parent_folder)
+        join(str(user_id or 0), upload_id), parent_folder)
     if not exists(source_folder):
         raise IOError
     try:
