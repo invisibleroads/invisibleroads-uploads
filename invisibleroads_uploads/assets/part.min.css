@@ -16,3 +16,8 @@
   background: white;
   cursor: inherit;
   display: block; }
+
+.upload-progress {
+  background: #337ab7;
+  height: 1em;
+  width: 0%; }
