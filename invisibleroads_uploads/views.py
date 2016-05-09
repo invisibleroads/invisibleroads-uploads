@@ -1,11 +1,10 @@
 from glob import glob
 from invisibleroads_macros.disk import (
     get_file_extension, make_folder, resolve_relative_path)
-from invisibleroads_posts.exceptions import HTTPNotFoundJSON
 from invisibleroads_posts.views import expect_param
 from os import rename
 from os.path import basename, exists, join
-from pyramid.httpexceptions import HTTPBadRequest
+from pyramid.httpexceptions import HTTPBadRequest, HTTPNotFound
 from shutil import copyfileobj
 from tempfile import mkdtemp
 
@@ -52,7 +51,7 @@ def get_upload_from(request):
     try:
         upload = get_upload(data_folder, user_id, upload_id)
     except IOError:
-        raise HTTPNotFoundJSON({'id': 'bad'})
+        raise HTTPNotFound({'id': 'bad'})
     return upload
 
 

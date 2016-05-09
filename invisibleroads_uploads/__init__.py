@@ -8,7 +8,7 @@ def includeme(config):
     http_expiration_time = get_http_expiration_time(settings)
 
     config.add_static_view(
-        '_/invisibleroads_uploads', 'invisibleroads_uploads:assets',
+        '_/invisibleroads-uploads', 'invisibleroads-uploads:assets',
         cache_max_age=http_expiration_time)
 
     add_routes(config)
