@@ -1,2 +1,2 @@
 include *.cfg *.rst
-recursive-include invisibleroads_uploads *.jinja2
+recursive-include invisibleroads_uploads *.css *.js *.jinja2
