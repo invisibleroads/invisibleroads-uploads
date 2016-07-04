@@ -6,7 +6,7 @@ jquery.fileupload.js
 invisibleroads-uploads.js
 "
 pushd node_modules/invisibleroads-uploads > /dev/null
-cat $SCRIPT_NAMES > main.js
+cat $SCRIPT_NAMES > index.js
 popd > /dev/null
 refresh-assets \
     invisibleroads_posts \
