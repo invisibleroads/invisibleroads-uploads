@@ -25,8 +25,8 @@ Configure views. ::
 
 Call template macro. ::
 
-    {% from 'invisibleroads_uploads:templates/parts.jinja2' import render_upload_button %}
-    {{ render_upload_button(id='xyz-upload', text='Browse for xyz', class='xyz') }}
+    {% from 'invisibleroads_uploads:templates/parts.jinja2' import upload_button %}
+    {{ upload_button(id='xyz-upload', text='Browse for xyz', class='xyz') }}
 
 Add script. ::
 
