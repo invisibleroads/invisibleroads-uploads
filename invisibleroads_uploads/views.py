@@ -14,7 +14,7 @@ def add_routes(config):
 
     config.add_view(
         receive_file,
-        permission='upload_file',
+        permission='upload-file',
         renderer='json',
         request_method='POST',
         route_name='files.json')
