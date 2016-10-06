@@ -19,6 +19,10 @@ Install package. ::
     python setup.py develop
     bash refresh.sh
 
+Add settings. ::
+
+    uploads.tokens.length = 32
+
 Configure views. ::
 
     config.include('invisibleroads_uploads')
@@ -28,9 +32,9 @@ Call template macro. ::
     {% from 'invisibleroads_uploads:templates/parts.jinja2' import upload_button %}
     {{ upload_button(id='xyz-upload', text='Browse for xyz', class='xyz') }}
 
-Add script. ::
+Add callback. ::
 
-    $('#abc-upload').on('uploaded.ir.upload', function(d) {
-        console.log('Uploaded xyz');
-        console.log(d);
+    $('#xyz-upload').on('uploaded.ir.upload', function(x) {
+        console.log(x.file_id);
+        console.log(x.file_name);
     });
