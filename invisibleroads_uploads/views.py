@@ -1,13 +1,14 @@
-from glob import glob
 from invisibleroads_macros.disk import (
     get_file_extension, make_folder, resolve_relative_path)
 from invisibleroads_macros.security import make_random_string
 from invisibleroads_posts.views import expect_param
 from os import rename
-from os.path import basename, exists, join
+from os.path import basename, join
 from pyramid.httpexceptions import HTTPBadRequest, HTTPNotFound
 from shutil import copyfileobj
 from tempfile import mkdtemp
+
+from .models import Upload
 
 
 def add_routes(config):
@@ -44,19 +45,16 @@ def receive_file(request):
 
     open(join(target_folder, 'name.txt'), 'wt').write(source_name)
     return {
-        'file_id': basename(target_folder),
-        'file_name': source_name,
+        'upload_id': basename(target_folder),
     }
 
 
 def get_upload_from(request):
-    data_folder = request.registry.settings['data.folder']
-    user_id = request.authenticated_userid or 0
-    file_id = expect_param('file_id', request.params)
+    upload_id = expect_param('upload_id', request.params)
     try:
-        upload = get_upload(data_folder, user_id, file_id)
+        upload = get_upload(request, upload_id)
     except IOError:
-        raise HTTPNotFound({'file_id': 'bad'})
+        raise HTTPNotFound({'upload_id': 'bad'})
     return upload
 
 
@@ -68,18 +66,11 @@ def make_upload_folder(data_folder, user_id, token_length):
         prefix='', dir=user_upload_folder)
 
 
-def get_upload(data_folder, user_id, file_id):
+def get_upload(request, upload_id):
+    settings = request.registry.settings
+    data_folder = settings['data.folder']
+    user_id = request.authenticated_userid or 0
     parent_folder = join(data_folder, 'uploads')
-    source_folder = resolve_relative_path(
-        join(str(user_id or 0), file_id), parent_folder)
-    if not exists(source_folder):
-        raise IOError
-    try:
-        source_path = glob(join(source_folder, 'raw*'))[0]
-    except IndexError:
-        raise IOError
-    return type('Upload', (object,), {
-        'folder': source_folder,
-        'path': source_path,
-        'name': open(join(source_folder, 'name.txt')).read(),
-    })
+    source_folder = resolve_relative_path(join(
+        str(user_id), upload_id), parent_folder)
+    return Upload(source_folder)
