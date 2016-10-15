@@ -12,6 +12,3 @@ class Upload(object):
         except IndexError:
             raise IOError
         self.name = open(join(folder, 'name.txt')).read()
-
-    def __del__(self):
-        remove_safely(self.folder)
