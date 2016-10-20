@@ -32,7 +32,7 @@ def receive_file(request):
     source_extension = get_file_extension(source_name)
 
     settings = request.registry.settings
-    data_folder = settings['data.folder']
+    data_folder = request.data_folder
     user_id = request.authenticated_userid or 0
     target_folder = make_upload_folder(
         data_folder, user_id, settings['uploads.tokens.length'])
@@ -67,8 +67,7 @@ def make_upload_folder(data_folder, user_id, token_length):
 
 
 def get_upload(request, upload_id):
-    settings = request.registry.settings
-    data_folder = settings['data.folder']
+    data_folder = request.data_folder
     user_id = request.authenticated_userid or 0
     parent_folder = join(data_folder, 'uploads')
     source_folder = resolve_relative_path(join(
