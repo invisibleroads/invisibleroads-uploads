@@ -1,4 +1,5 @@
 from invisibleroads_macros.iterable import set_default
+from invisibleroads_posts import add_website_dependency
 
 from .views import add_routes
 
@@ -12,7 +13,7 @@ def includeme(config):
 def configure_settings(config):
     settings = config.registry.settings
     set_default(settings, 'uploads.tokens.length', 32, int)
-    settings['website.dependencies'].append(config.package_name)
+    add_website_dependency(config)
 
 
 def configure_assets(config):
