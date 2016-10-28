@@ -5,6 +5,7 @@ from invisibleroads_posts.views import expect_param
 from os import rename
 from os.path import basename, join
 from pyramid.httpexceptions import HTTPBadRequest, HTTPNotFound
+from pyramid.session import check_csrf_origin, check_csrf_token
 from shutil import copyfileobj
 from tempfile import mkdtemp
 
@@ -19,10 +20,13 @@ def add_routes(config):
         permission='upload-file',
         renderer='json',
         request_method='POST',
+        require_csrf=False,
         route_name='files.json')
 
 
 def receive_file(request):
+    if request.authenticated_userid:
+        check_csrf_origin(request) and check_csrf_token(request)
     try:
         field_storage = request.POST['files[]']
     except KeyError:
