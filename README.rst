@@ -21,7 +21,7 @@ Install package. ::
 
 Add settings. ::
 
-    uploads.tokens.length = 32
+    uploads.id.length = 32
 
 Configure views. ::
 

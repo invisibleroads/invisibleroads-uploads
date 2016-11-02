@@ -1,13 +1,11 @@
-from invisibleroads_macros.disk import (
-    get_file_extension, make_folder, resolve_relative_path)
-from invisibleroads_macros.security import make_random_string
+from glob import glob
+from invisibleroads_macros.disk import get_file_extension
 from invisibleroads_posts.views import expect_param
 from os import rename
 from os.path import basename, join
 from pyramid.httpexceptions import HTTPBadRequest, HTTPNotFound
 from pyramid.session import check_csrf_origin, check_csrf_token
 from shutil import copyfileobj
-from tempfile import mkdtemp
 
 from .models import Upload
 
@@ -36,20 +34,18 @@ def receive_file(request):
     source_extension = get_file_extension(source_name)
 
     settings = request.registry.settings
-    data_folder = request.data_folder
-    user_id = request.authenticated_userid or 0
-    target_folder = make_upload_folder(
-        data_folder, user_id, settings['uploads.tokens.length'])
-    target_path = join(target_folder, 'raw' + source_extension)
+    upload_folder = Upload.spawn_folder(request.data_folder, settings[
+        'uploads.upload.id.length'], request.authenticated_userid)
+    upload_path = join(upload_folder, 'raw' + source_extension)
 
-    temporary_path = join(target_folder, 'temporary.bin')
+    temporary_path = join(upload_folder, 'temporary.bin')
     with open(temporary_path, 'wb') as temporary_file:
         copyfileobj(source_file, temporary_file)
-    rename(temporary_path, target_path)
+    rename(temporary_path, upload_path)
 
-    open(join(target_folder, 'name.txt'), 'wt').write(source_name)
+    open(join(upload_folder, 'name.txt'), 'wt').write(source_name)
     return {
-        'upload_id': basename(target_folder),
+        'upload_id': basename(upload_folder),
     }
 
 
@@ -62,18 +58,12 @@ def get_upload_from(request):
     return upload
 
 
-def make_upload_folder(data_folder, user_id, token_length):
-    user_id = str(user_id or 0)
-    user_upload_folder = make_folder(join(data_folder, 'uploads', user_id))
-    return mkdtemp(
-        suffix=make_random_string(token_length - 6),
-        prefix='', dir=user_upload_folder)
-
-
 def get_upload(request, upload_id):
-    data_folder = request.data_folder
-    user_id = request.authenticated_userid or 0
-    parent_folder = join(data_folder, 'uploads')
-    source_folder = resolve_relative_path(join(
-        str(user_id), upload_id), parent_folder)
-    return Upload(source_folder)
+    upload = Upload(id=upload_id, owner_id=request.authenticated_userid)
+    upload.folder = upload.get_folder(request.data_folder)
+    try:
+        upload.path = glob(join(upload.folder, 'raw*'))[0]
+    except IndexError:
+        raise IOError
+    upload.name = open(join(upload.folder, 'name.txt')).read()
+    return upload
