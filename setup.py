@@ -7,7 +7,7 @@ DESCRIPTION = '\n\n'.join(open(join(FOLDER, x)).read().strip() for x in [
     'README.rst', 'CHANGES.rst'])
 setup(
     name='invisibleroads-uploads',
-    version='0.0.6',
+    version='0.1.0',
     description='File upload functionality',
     long_description=DESCRIPTION,
     classifiers=[
