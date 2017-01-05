@@ -35,7 +35,7 @@ def receive_file(request):
 
     settings = request.registry.settings
     upload_folder = Upload.spawn_folder(request.data_folder, settings[
-        'uploads.upload.id.length'], request.authenticated_userid)
+        'upload.id.length'], request.authenticated_userid)
     upload_path = join(upload_folder, 'raw' + source_extension)
 
     temporary_path = join(upload_folder, 'temporary.bin')

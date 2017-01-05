@@ -12,7 +12,7 @@ def includeme(config):
 
 def configure_settings(config):
     settings = config.registry.settings
-    set_default(settings, 'uploads.upload.id.length', 32, int)
+    set_default(settings, 'upload.id.length', 32, int)
     add_website_dependency(config)
 
 
