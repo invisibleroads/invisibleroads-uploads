@@ -1,5 +1,6 @@
 {% macro upload_button(id, text='Browse', class='') %}
+<div id="{{ id }}-group">
 <span id="{{ id }}" class="btn btn-default btn-file {{ class }}">{{ text }} <input type="file" data-url="/files.json"></span>
-<span class="upload-feedback feedback"></span>
-<div class="upload-progress progress"></div>
+<span class="feedback"></span>
+</div>
 {% endmacro %}
