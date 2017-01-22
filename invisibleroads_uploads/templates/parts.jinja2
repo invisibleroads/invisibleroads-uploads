@@ -1,6 +1,6 @@
-{% macro upload_button(id, text='Browse', class='') %}
+{% macro upload_button(request, id, text='Browse', class='', data_name='') %}
 <div id="{{ id }}-group">
-<span id="{{ id }}" class="btn btn-default btn-file {{ class }}">{{ text }} <input type="file" data-url="/files.json"></span>
+<span id="{{ id }}" class="btn btn-default btn-file {{ class }}" data-name="{{ data_name }}">{{ text }} <input type="file" data-url="{{ request.route_path('files.json') }}"></span>
 <span class="feedback"></span>
 </div>
 {% endmacro %}

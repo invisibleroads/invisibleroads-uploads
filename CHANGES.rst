@@ -1,4 +1,8 @@
-0.0
+0.2
+---
+- Ignore multiple clicks on upload button until dialog closes
+
+0.1
 ---
 - Add basic upload functionality
 - Ignore multiple clicks on upload button for a few seconds

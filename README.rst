@@ -21,7 +21,7 @@ Install package. ::
 
 Add settings. ::
 
-    uploads.id.length = 32
+    upload.id.length = 32
 
 Configure views. ::
 
@@ -30,7 +30,7 @@ Configure views. ::
 Call template macro. ::
 
     {% from 'invisibleroads_uploads:templates/parts.jinja2' import upload_button %}
-    {{ upload_button(id='xyz-upload', text='Browse for xyz', class='xyz') }}
+    {{ upload_button(request, id='xyz-upload', text='Browse for xyz', class='xyz') }}
 
 Add callback. ::
 
