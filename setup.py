@@ -25,7 +25,11 @@ setup(
     setup_requires=[
         'pytest-runner',
     ],
-    install_requires=[],
+    install_requires=[
+        'invisibleroads-macros>=0.8.0'
+        'invisibleroads-posts>=0.5.3'
+        'pyramid',
+    ],
     tests_require=[
         'pytest',
     ])
