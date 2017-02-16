@@ -34,6 +34,6 @@ Call template macro. ::
 
 Add callback. ::
 
-    $('#xyz-upload').on('uploaded.ir.upload', function(x) {
+    $('#xyz-upload').on('uploaded.ir', function(x) {
         console.log(x.upload_id);
     });
