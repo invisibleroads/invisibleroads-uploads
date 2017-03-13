@@ -32,8 +32,8 @@ Call template macro. ::
     {% from 'invisibleroads_uploads:templates/parts.jinja2' import upload_button %}
     {{ upload_button(request, id='xyz-upload', text='Browse for xyz', class='xyz') }}
 
-Add callback. ::
+Add callback and activate button. ::
 
-    $('#xyz-upload').on('uploaded.ir', function(x) {
-        console.log(x.upload_id);
-    });
+    $('#xyz-upload').on('uploaded.ir', function(e, d) {
+      console.log(d.upload_id);
+    }).enable();
