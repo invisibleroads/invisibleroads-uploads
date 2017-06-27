@@ -50,7 +50,7 @@ def receive_file(request):
 
 
 def get_upload_from(request):
-    upload_id = expect_param('upload_id', request.params)
+    upload_id = expect_param(request, 'upload_id')
     try:
         upload = get_upload(request, upload_id)
     except IOError:
