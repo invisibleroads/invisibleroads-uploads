@@ -4,10 +4,6 @@ from pytest import fixture, raises
 from invisibleroads_uploads.models import Upload
 
 
-class Y(Upload):
-    pass
-
-
 class TestUpload(object):
 
     random_length = 10
@@ -51,6 +47,10 @@ class TestUpload(object):
         folder = Y(id=self.instance_id, owner_id=self.user_id).get_folder(
             data_folder)
         assert basename(folder) == str(self.instance_id)
+
+
+class Y(Upload):
+    pass
 
 
 @fixture
