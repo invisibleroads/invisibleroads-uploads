@@ -1,4 +1,4 @@
-from invisibleroads_macros.iterable import set_default
+from invisibleroads_macros.configuration import set_default
 from invisibleroads_posts import add_website_dependency
 
 from .views import add_routes
