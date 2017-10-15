@@ -35,20 +35,6 @@ class TestUpload(object):
         with raises(IOError):
             Upload.load(data_folder, USER_ID, upload.id)
 
-    def test_load_from_with_param_name(self, uploads_request):
-        param_name = 'x'
-        uploads_request.POST[param_name] = prepare_field_storage(NAME, CONTENT)
-        x = Upload.load_from(uploads_request, param_name)
-        assert x.name == NAME
-        assert open(x.path, 'rt').read() == CONTENT
-
-    def test_load_from_with_upload_id(self, config, uploads_request, upload):
-        config.testing_securitypolicy(userid=USER_ID, permissive=False)
-        uploads_request.POST['upload_id'] = upload.id
-        x = Upload.load_from(uploads_request)
-        assert x.name == upload.name
-        assert x.path == upload.path
-
     def test_get_from(self, config, uploads_request, upload):
         config.testing_securitypolicy(userid=USER_ID, permissive=False)
         with raises(HTTPBadRequest):

@@ -3,7 +3,6 @@ from invisibleroads_macros.disk import (
     get_file_extension, make_enumerated_folder, make_unique_folder,
     resolve_relative_path)
 from invisibleroads_posts.models import DummyBase, FolderMixin, get_record_id
-from invisibleroads_posts.views import expect_param
 from io import BytesIO
 from os import rename
 from os.path import basename, join
@@ -56,14 +55,6 @@ class Upload(FolderMixin, DummyBase):
             instance.path = glob(join(instance.folder, 'raw*'))[0]
         except IndexError:
             raise IOError
-        return instance
-
-    @classmethod
-    def load_from(Class, request, param_name='upload_id'):
-        if param_name != 'upload_id':
-            return Class.save_from(request, param_name)
-        record_id = expect_param(request, param_name)
-        instance = Class.get_from(request, record_id)
         return instance
 
     @classmethod

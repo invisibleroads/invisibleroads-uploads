@@ -7,10 +7,6 @@ from pytest import raises
 from conftest import CONTENT, NAME, USER_ID
 
 
-MODULE_NAME = 'invisibleroads_uploads.views'
-CHECK_CSRF_TOKEN = MODULE_NAME + '.check_csrf_token'
-
-
 class TestReceiveFile(object):
 
     def assert_upload(self, request):
@@ -32,3 +28,7 @@ class TestReceiveFile(object):
         config.testing_securitypolicy(userid=USER_ID, permissive=False)
         with raises(BadCSRFToken):
             self.assert_upload(uploads_request)
+
+
+MODULE_NAME = 'invisibleroads_uploads.views'
+CHECK_CSRF_TOKEN = MODULE_NAME + '.check_csrf_token'
