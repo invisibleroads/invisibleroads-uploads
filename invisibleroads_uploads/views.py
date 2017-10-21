@@ -8,7 +8,7 @@ def add_routes(config):
 
     config.add_view(
         receive_file,
-        permission='upload-file',
+        permission='file-upload',
         renderer='json',
         request_method='POST',
         require_csrf=False,
