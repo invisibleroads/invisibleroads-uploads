@@ -26,10 +26,9 @@ setup(
         'pytest-runner',
     ],
     install_requires=[
-        'invisibleroads-macros>=0.8.4.5',
+        'invisibleroads-macros>=0.9.0',
         'invisibleroads-posts>=0.5.6',
         'pyramid',
-    ],
-    tests_require=[
         'pytest',
+        'six',
     ])
