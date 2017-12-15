@@ -18,4 +18,4 @@ def configure_settings(config):
 
 def configure_assets(config):
     config.add_cached_static_view(
-        '_/invisibleroads-uploads', 'invisibleroads-uploads:assets')
+        '-/invisibleroads-uploads', 'invisibleroads-uploads:assets')
