@@ -1,7 +1,7 @@
 from glob import glob
 from invisibleroads_macros.disk import (
-    get_file_extension, make_enumerated_folder, make_unique_folder,
-    resolve_relative_path)
+    get_absolute_path, get_file_extension, make_enumerated_folder,
+    make_unique_folder)
 from invisibleroads_posts.models import DummyBase, FolderMixin, get_record_id
 from io import BytesIO
 from os import rename
@@ -86,12 +86,12 @@ class Upload(FolderMixin, DummyBase):
     def get_user_folder(Class, data_folder, owner_id):
         parent_folder = Class.get_parent_folder(data_folder)
         folder_name = str(owner_id or 'anonymous')
-        return resolve_relative_path(folder_name, parent_folder)
+        return get_absolute_path(folder_name, parent_folder)
 
     def get_folder(self, data_folder):
         user_folder = self.get_user_folder(data_folder, self.owner_id)
         folder_name = str(self.id)
-        return resolve_relative_path(folder_name, user_folder)
+        return get_absolute_path(folder_name, user_folder)
 
 
 def prepare_file(x):

@@ -1,3 +1,4 @@
+from invisibleroads_macros.exceptions import BadPath
 from invisibleroads_uploads.models import Upload
 from invisibleroads_uploads.tests import prepare_field_storage
 from os import remove
@@ -64,7 +65,7 @@ class TestUpload(object):
         assert basename(dirname(folder)) == 'anonymous'
 
     def test_spawn_random_folder(self, data_folder):
-        with raises(IOError):
+        with raises(BadPath):
             Upload.spawn_folder(data_folder, ID_LENGTH, owner_id='../1')
         folder = Upload.spawn_folder(data_folder, ID_LENGTH, USER_ID)
         assert len(basename(folder)) == ID_LENGTH
@@ -74,14 +75,14 @@ class TestUpload(object):
         assert basename(dirname(folder)) == 'anonymous'
 
     def test_get_user_folder(self, data_folder):
-        with raises(IOError):
+        with raises(BadPath):
             Upload.get_user_folder(data_folder, owner_id='../1')
         user_folder = Upload.get_user_folder(data_folder, USER_ID)
         assert basename(user_folder) == str(USER_ID)
 
     def test_get_folder(self, data_folder):
         record_id = 100
-        with raises(IOError):
+        with raises(BadPath):
             Upload(id=record_id, owner_id='../1').get_folder(data_folder)
         folder = Upload(id=record_id, owner_id=USER_ID).get_folder(data_folder)
         assert basename(folder) == str(record_id)
