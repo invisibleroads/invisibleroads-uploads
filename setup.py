@@ -7,7 +7,7 @@ DESCRIPTION = '\n\n'.join(open(join(FOLDER, x)).read().strip() for x in [
     'README.rst', 'CHANGES.rst'])
 setup(
     name='invisibleroads-uploads',
-    version='0.4.2',
+    version='0.4.2.1',
     description='File upload functionality',
     long_description=DESCRIPTION,
     classifiers=[
@@ -27,7 +27,7 @@ setup(
     ],
     install_requires=[
         'invisibleroads-macros>=0.9.2',
-        'invisibleroads-posts>=0.5.8.1',
+        'invisibleroads-posts>=0.5.8.2',
         'pyramid',
         'pytest',
         'six',
